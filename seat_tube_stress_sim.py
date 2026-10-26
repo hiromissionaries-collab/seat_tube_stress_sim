@@ -502,7 +502,7 @@ def get_sim(L, d, h, s, beta, P, matkey, Dz, Dp, v0):
     sim = simulate(*key)
     with _LOCK:
         _CACHE[key] = sim
-        while len(_CACHE) > 2:                 # 高解像度化でメモリが増えたため保持数を 3→2
+        while len(_CACHE) > 1:                 # 高解像度化でメモリが増えたため保持数を 3→2
             _CACHE.popitem(last=False)
     return sim
 
