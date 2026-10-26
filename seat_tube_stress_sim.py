@@ -247,9 +247,19 @@ def build_basis():
     return dict(lam=lam, Rq=Rq, Rd=Rd, Pq=Pq, rq=rq, wq=wq, cos=cosm, cproj=cproj)
 
 
-BASIS = build_basis()
-LAM2 = (BASIS["lam"] ** 2).reshape(-1)
-COS1 = BASIS["cos"][1]
+# キャッシュ用の入れ物を用意（ここではまだ計算しないのでメモリを食わない）
+_BASIS_CACHE = None
+_LAM2_CACHE = None
+_COS1_CACHE = None
+
+
+def get_basis():
+  global _BASIS_CACHE, _LAM2_CACHE, _COS1_CACHE
+  if _BASIS_CACHE is None:
+    _BASIS_CACHE = build_basis()
+    _LAM2_CACHE = (_BASIS_CACHE["lam"] ** 2).reshape(-1)
+    _COS1_CACHE = _BASIS_CACHE["cos"][1]
+  return _BASIS_CACHE, _LAM2_CACHE, _COS1_CACHE
 
 
 # ----------------------------------------------------------------------------
@@ -349,6 +359,9 @@ def curvature(eps_z):
 # シミュレーション本体
 # ----------------------------------------------------------------------------
 def simulate(L, d, h, s, beta_deg, P, matkey, Dz, Dp, v0):
+    # ▼ ここで必要なタイミング（初回アクセス時）に BASIS, LAM2, COS1 を取得する
+    BASIS, LAM2, COS1 = get_basis()
+
     mat = MATERIALS[matkey]
     E, nu, sy0, H = mat["E"], mat["nu"], mat["sy"], mat["H"]
     G = E / (2.0 * (1.0 + nu))
@@ -361,7 +374,7 @@ def simulate(L, d, h, s, beta_deg, P, matkey, Dz, Dp, v0):
     zb = L - d
     z_view = z[::2]
     nz_view = len(z_view)
-    Dz_eff = max(Dz, v0 * dz / 2.0)                  # セル Péclet 数 <= 1
+    Dz_eff = max(Dz, v0 * dz / 2.0)                   # セル Péclet 数 <= 1
     Ez = z_operator(nz, round(dz, 9), float(Dz_eff), float(v0))
 
     # 接触パッチ (ヘルツ型の周方向 + ガウス型の軸方向)
