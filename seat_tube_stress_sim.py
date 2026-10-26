@@ -126,18 +126,17 @@ from scipy import special as sp
 from scipy.optimize import brentq
 from scipy.linalg import expm
 
-def _ensure(pkg, module):
-    """未インストールなら pip で自動導入する (Colab のランタイム再起動後でも 1 セルで動く)。"""
-    import importlib
-    import subprocess
-    import sys
-    try:
-        importlib.import_module(module)
-    except ImportError:
-        print(f"[setup] {pkg} をインストールしています ...")
-        subprocess.check_call([sys.executable, "-m", "pip", "install", "-q", pkg])
-        importlib.invalidate_caches()
-
+# def _ensure(pkg, module):
+#     """未インストールなら pip で自動導入する (Colab のランタイム再起動後でも 1 セルで動く)。"""
+#     import importlib
+#     import subprocess
+#     import sys
+#     try:
+#         importlib.import_module(module)
+#     except ImportError:
+#         print(f"[setup] {pkg} をインストールしています ...")
+#         subprocess.check_call([sys.executable, "-m", "pip", "install", "-q", pkg])
+#         importlib.invalidate_caches()
 
 _ensure("dash>=2.14", "dash")
 
