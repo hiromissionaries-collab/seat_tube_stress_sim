@@ -1,3 +1,4 @@
+import streamlit as st
 # -*- coding: utf-8 -*-
 """3D シートパイプ応力拡散シミュレーター .ipynb
 
