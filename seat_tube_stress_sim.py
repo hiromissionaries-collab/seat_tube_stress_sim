@@ -359,6 +359,8 @@ def simulate(L, d, h, s, beta_deg, P, matkey, Dz, Dp, v0):
     dz = L / (nz - 1)
     z = np.arange(nz) * dz
     zb = L - d
+    z_view = z[::2]
+    nz_view = len(z_view)
     Dz_eff = max(Dz, v0 * dz / 2.0)                  # セル Péclet 数 <= 1
     Ez = z_operator(nz, round(dz, 9), float(Dz_eff), float(v0))
 
