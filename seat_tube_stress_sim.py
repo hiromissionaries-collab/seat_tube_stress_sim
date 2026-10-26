@@ -458,11 +458,18 @@ def simulate(L, d, h, s, beta_deg, P, matkey, Dz, Dp, v0):
         dlp = cumtrapz0(cumtrapz0(kap_p, dz), dz)
         dlt = cumtrapz0(cumtrapz0(kap_t, dz), dz)
 
-        for name, arr in (("veq", seqc), ("vtr", seq), ("sth", stc), ("sz", szc),
-                          ("epb", epb), ("urp", urp), ("urt", urt)):
-            fr[name][f] = arr[LI]
-        fr["dlp"][f] = dlp
-        fr["dlt"][f] = dlt
+        for name, arr in (
+            ("veq", seqc),
+            ("vtr", seq),
+            ("sth", stc),
+            ("sz", szc),
+            ("epb", epb),
+            ("urp", urp),
+            ("urt", urt),
+        ):
+          fr[name][f] = arr[LI][:, :, ::2]
+        fr["dlp"][f] = dlp[::2]
+        fr["dlt"][f] = dlt[::2]
 
     # 色レンジ
     ranges = {}
