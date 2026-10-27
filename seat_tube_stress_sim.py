@@ -1,4 +1,3 @@
-import streamlit as st
 # -*- coding: utf-8 -*-
 """3D シートパイプ応力拡散シミュレーター .ipynb
 
@@ -126,23 +125,23 @@ from scipy import special as sp
 from scipy.optimize import brentq
 from scipy.linalg import expm
 
-# def _ensure(pkg, module):
-#     """未インストールなら pip で自動導入する (Colab のランタイム再起動後でも 1 セルで動く)。"""
-#     import importlib
-#     import subprocess
-#     import sys
-#     try:
-#         importlib.import_module(module)
-#     except ImportError:
-#         print(f"[setup] {pkg} をインストールしています ...")
-#         subprocess.check_call([sys.executable, "-m", "pip", "install", "-q", pkg])
-#         importlib.invalidate_caches()
+def _ensure(pkg, module):
+    """未インストールなら pip で自動導入する (Colab のランタイム再起動後でも 1 セルで動く)。"""
+    import importlib
+    import subprocess
+    import sys
+    try:
+        importlib.import_module(module)
+    except ImportError:
+        print(f"[setup] {pkg} をインストールしています ...")
+        subprocess.check_call([sys.executable, "-m", "pip", "install", "-q", pkg])
+        importlib.invalidate_caches()
 
-# （自動インストール処理はすべて削除・無効化しました）
 
-# 削除またはコメントアウトする例
-# import dash
-# from dash import ...
+_ensure("dash>=2.14", "dash")
+
+import dash
+from dash import dcc, html, Input, Output, State
 
 # ----------------------------------------------------------------------------
 # 定数 (幾何・離散化)   ※ 高解像度化: NTH, NM, NT, DZ_TARGET を細分化
