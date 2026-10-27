@@ -138,7 +138,7 @@ from scipy.linalg import expm
 #         subprocess.check_call([sys.executable, "-m", "pip", "install", "-q", pkg])
 #         importlib.invalidate_caches()
 
-_ensure("dash>=2.14", "dash")
+# （自動インストール処理はすべて削除・無効化しました）
 
 import dash
 from dash import dcc, html, Input, Output, State
