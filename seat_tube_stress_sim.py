@@ -1337,9 +1337,12 @@ def _free_port(start=8050, tries=60):
     return start
 
 
+import os
+
 if __name__ == "__main__":
-    runner = getattr(app, "run", None) or app.run_server
+    port = int(os.environ.get("PORT", 8050))
+    # RenderではGunicornから server を直接叩くため、ローカル実行時のフォールバックとして設定
     try:
-        runner(host="127.0.0.1", port=_free_port(), debug=False, jupyter_height=1080)
+        app.run(host="0.0.0.0", port=port, debug=False)
     except TypeError:
-        runner(host="127.0.0.1", port=_free_port(), debug=False)
+        app.run_server(host="0.0.0.0", port=port, debug=False)
