@@ -140,8 +140,9 @@ from scipy.linalg import expm
 
 # （自動インストール処理はすべて削除・無効化しました）
 
-import dash
-from dash import dcc, html, Input, Output, State
+# 削除またはコメントアウトする例
+# import dash
+# from dash import ...
 
 # ----------------------------------------------------------------------------
 # 定数 (幾何・離散化)   ※ 高解像度化: NTH, NM, NT, DZ_TARGET を細分化
