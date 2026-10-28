@@ -1208,7 +1208,7 @@ dcc.Slider(
         "placement": "top",
         "always_visible": True,
         "style": {
-            "color": "#ffffff",
+            "color": "#222222",
             "fontSize": "16px",
             "fontWeight": "bold"
         }
