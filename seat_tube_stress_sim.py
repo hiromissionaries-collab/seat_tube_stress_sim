@@ -1195,9 +1195,25 @@ def slider(sid, label, mn, mx, step, val, mark_step, updatemode="mouseup"):
         marks[vv] = {"label": str(vv), "style": {"fontSize": "10px", "color": "#9aa6bd"}}
     return html.Div([
         html.Div(label, style=LABEL),
-        dcc.Slider(id=sid, min=mn, max=mx, step=step, value=val, marks=marks,
-                   dots=(mx - mn) / step <= 60, updatemode=updatemode,
-                   tooltip={"placement": "top", "always_visible": True}),
+dcc.Slider(
+    id=sid,
+    min=mn,
+    max=mx,
+    step=step,
+    value=val,
+    marks=marks,
+    dots=(mx - mn) / step <= 60,
+    updatemode=updatemode,
+    tooltip={
+        "placement": "top",
+        "always_visible": True,
+        "style": {
+            "color": "#ffffff",
+            "fontSize": "16px",
+            "fontWeight": "bold"
+        }
+    }
+),
     ], style={"marginBottom": "22px"})
 
 
